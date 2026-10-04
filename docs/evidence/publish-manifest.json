@@ -1,0 +1,29 @@
+{
+  "name": "floppy-pepe",
+  "files": {
+    "/THIRD_PARTY_NOTICES.txt": {
+      "hash": "759f02b5afb6ca84446d9c811992e8a7",
+      "size": 3294
+    },
+    "/assets/index-C_qE0oWZ.css": {
+      "hash": "e1e240c78b6aaa76dd6086e13d0c3194",
+      "size": 17787
+    },
+    "/assets/index-DBI2rFL_.js": {
+      "hash": "61fc102ff40917384afc19abfe950885",
+      "size": 243522
+    },
+    "/chest.svg": {
+      "hash": "c94e302a4132066f338a580193ae6b64",
+      "size": 882
+    },
+    "/index.html": {
+      "hash": "6701464e2e86585a36b6b0117d2de549",
+      "size": 864
+    },
+    "/pepe.svg": {
+      "hash": "fddea1bcf706fa08b5cdc87e91411aea",
+      "size": 442
+    }
+  }
+}

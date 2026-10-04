@@ -1,28 +1,27 @@
-# FLOPPY PEPE — publication blocked
+# FLOPPY PEPE
 
-The missing `dist/index.html` has been repaired with a buildable React **publication-status page**. The export explicitly says that the game and competition are unavailable. This is useful partial delivery, not the requested playable game or a completed publication.
+A playable React / TypeScript browser arcade, built from scratch with original pixel artwork. Tap, click or press Space to hop through green and gold RAM. The complete static export is in `dist/`, alongside source and the existing dependency lockfile.
 
-The [original reference](https://floppy-pepe.bikemcanerkoc.chatgpt.site/) returned **HTTP 401 Unauthorized**, with “Log in to access”, when checked with curl. Python's HTTP client received 403. No original game source, Pepe/RAM/treasure-chest images or sounds were supplied. Please provide the original source files or an accessible repository containing those assets and access to the reference for appearance comparison. No approximate game has been created.
+**Mode: practice. Competition not operational. Public playable URL: not created in this run.** Publishing the completed site was attempted using the available Cloudflare credentials. Both the static-assets upload and direct Worker upload returned HTTP 403, “No access to the specified resource.” No IPFS pinning or ENS publishing connector was available. See [publication evidence](docs/evidence/publication.json) and [static-assets attempt](docs/evidence/publication-static-assets.json). A successful local preview is not a public deployment.
 
-No backend or IPFS publishing connection is available in the exposed tools or supplied project. Please provide the intended persistent backend project and publishing service through the deployment environment. Private credentials must stay server-side. The published IPFS/eth.limo URL and original source repository URL are **unavailable**; no CID or deployment has been created.
+## Play and features
 
-## Delivered files
-
-- `src/main.tsx`, `src/styles.css`: status-page source, not recovered game source.
-- `package.json`, `package-lock.json`, `tsconfig.json`, `vite.config.ts`: pinned React/Vite/TypeScript build.
-- `dist/index.html` and `dist/assets/`: complete production status-page export with relative asset URLs.
-- `scripts/check-export.mjs`, `scripts/check-browser.mjs`: reproducible checks scoped to this export.
-- [DESIGN.md](DESIGN.md): actual status-page design; original game design remains unknown.
-- [Validation](artifacts/validation.md), [browser results](artifacts/browser-check.json), and [access evidence](artifacts/reference-access.json): actual checks and limitations.
+- Tap/click the canvas, Space or ↑ to hop. Ceiling, floor and RAM collisions end the round.
+- Green RAM: +1; occasional gold RAM: +3. Every 10 points adds a level. Speed increases and gaps narrow; newly generated gaps move vertically from level 3.
+- Play / Play again, pause/resume, sound, SHARE, RESET, IMD, INFO and STATS work. Escape, leaving the tab or losing window focus pauses a round. RESET affects only the current round.
+- Device-saved stable practice identity, editable nickname, best score, rounds played, top level and gold RAM count. Storage failure leaves the game playable with an explanatory message. These records are not shared or verified.
+- Daily Claim is disabled. The leaderboard has a truthful empty state, exact prize terms and no launch timer. No login, wallet, payment, token or automated payout is included.
 
 ## Install, preview and rebuild
 
-Requires Node 22.12 or newer. To respect this assignment's protected `node_modules/` paths, install into a temporary copy rather than the submission tree. From the repository root:
+Node 22.12+ is required. The existing `package.json`, lockfile, TypeScript and Vite configuration are unchanged. Its internal package name still says `publication-status` because those dependencies/manifests are protected; no such branding appears in the game.
+
+Install into a temporary build copy to keep all dependencies and caches outside this repository:
 
 ```sh
 build_dir="$(mktemp -d /tmp/floppy-pepe-build.XXXXXX)"
 cp package.json package-lock.json tsconfig.json vite.config.ts index.html "$build_dir/"
-cp -R src scripts public "$build_dir/"
+cp -R src public scripts "$build_dir/"
 npm --prefix "$build_dir" ci --cache /tmp/floppy-pepe-npm-cache
 npm --prefix "$build_dir" run typecheck
 npm --prefix "$build_dir" run build
@@ -30,43 +29,51 @@ npm --prefix "$build_dir" run check:export
 npm --prefix "$build_dir" run preview
 ```
 
-Open the local URL printed by Vite. Stop preview with Ctrl+C. `npm --prefix "$build_dir" run dev` runs the development server instead. After a successful rebuild, replace the repository's generated `dist/` directory with the complete `$build_dir/dist/` directory; retain source and lockfile. Do not submit the temporary copy, dependencies, npm cache or browser downloads.
+Open the preview URL printed by Vite; Ctrl+C stops it. For development, run `npm --prefix "$build_dir" run dev`. No server is needed by the exported frontend. After rebuilding, replace the repository's `dist/` with the **complete** temporary `dist/`, removing stale hashed assets. Vite's existing `base: './'` keeps asset URLs relative for IPFS gateway subpaths. No runtime remote fonts or artwork are required.
 
-For browser validation, install Chromium using the temporary copy's Playwright binary, then run the bounded verification script:
+## Reproduce validation
 
 ```sh
+node --experimental-strip-types "$build_dir/scripts/check-game.mjs"
 PLAYWRIGHT_BROWSERS_PATH=/tmp/floppy-pepe-playwright-browsers \
   "$build_dir/node_modules/.bin/playwright" install chromium
 PLAYWRIGHT_BROWSERS_PATH=/tmp/floppy-pepe-playwright-browsers \
   npm --prefix "$build_dir" run check:browser
 ```
 
-The script serves that copy's finished `dist/` under `/preview/`, closes its browser and server on completion, and writes results/screenshots to that copy's `artifacts/`. Linux may need Chromium system libraries; they were available during this run. Neither browser downloads nor dependencies belong in Git. No ignore file was changed.
+The browser script owns a temporary foreground HTTP server at `/preview/`, closes it and Chromium when finished, and writes evidence into the build copy's `artifacts/`. Keep browser downloads, dependencies and caches outside Git. The repository's existing Git exclude ignores `artifacts/`; final evidence is copied to `docs/evidence/` instead, without editing any ignore file.
 
-## Actual verification
+Actual final checks passed: install (0 reported vulnerabilities), typecheck, production build, export inspection, nine engine behavior checks and Chromium interaction validation at 320, 390, 768 and 1280 pixels. Browser play driven by observations of the rendered canvas reached **23 points / level 3** without game-state injection. It checked collisions, score persistence, play/replay/reset, sound generation/muting, nickname errors/persistence, modal dismissal/focus return, sharing/fallback, touch input and Space without scrolling. Automated accessibility scans found zero violations in the final ready and Info states. No browser console or resource errors were recorded. [Full evidence and limitations](docs/validation.md); [implemented design](DESIGN.md).
 
-`npm ci`, `npm run typecheck`, `npm run build`, `npm run check:export` and `npm run check:browser` passed in the isolated build copy. Its source, lockfile and final export were compared byte for byte with this repository. Export size: **229,002 bytes**.
+## Publish the finished export
 
-Chromium checked the production export at 320, 390, 768 and 1280 pixels: native disclosure by keyboard/click/touch, focus styling, correct reference-link destination, exact reward copy, 200% text enlargement, no horizontal overflow, no runtime/resource errors, and zero axe violations in the expanded state. Screenshots at 320 and 1280 were inspected; a focus-spacing defect was fixed and rechecked. These are status-page checks, not gameplay tests. Native browser zoom, screen readers, physical devices and original-game comparison remain unverified.
+The submission publisher must include `dist/index.html`, all of `dist/assets/`, `dist/pepe.svg`, `dist/chest.svg` and the notices. The source and existing lockfile remain in the repository. Git index/commits are left to the submission system because this assignment prohibits modifying `.git/`.
 
-## Competition launch time
+A credentialed Cloudflare deployment can use the included script from the repository root:
 
-**No launch setting is implemented yet.** An operational configuration command cannot be supplied without the original game and a connected backend. Do not put a launch date in the static frontend as the authoritative competition clock.
+```sh
+node scripts/publish.mjs --dry-run
+node scripts/publish.mjs
+```
 
-When the backend is available, configure a fresh launch instant as an explicit UTC timestamp. Derive the end as `launch + 864000000` milliseconds (exactly ten days). The server must expose both dates, accept competition scores only inside that window, freeze the final ranking at the end and permit practice afterward without ranking changes. Verify before launch, at launch, immediately before the end, exactly at the end and afterward. Never reuse earlier test dates.
+Supply `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` through the deployment environment, **not** an exported file. The account-scoped token must permit Workers Scripts Edit / static asset upload and workers.dev route management. The script uses the game-based name `floppy-pepe`, uploads only `dist/`, enables its public workers.dev route, and prints the actual URL after anonymous HTML verification. `--inline` is an alternate normal Worker upload for accounts without the static-assets API; it was also denied here. This publishing code is supplied but a successful deployment is unverified.
 
-The required reward statement is preserved in the status-page disclosure:
+The API flow follows [Cloudflare's direct-upload documentation](https://developers.cloudflare.com/workers/static-assets/direct-upload/). To validate a successful deployment, run the same browser script with `PUBLIC_GAME_URL` set to the returned URL. Do not report a guessed workers.dev hostname as live.
 
-> The competition lasts 10 days. The player ranked #1 at the end will receive 5 IMD. The reward will be sent manually by the organizer after the competition ends.
+For the existing IdentityMD/IPFS workflow, publish the entire `dist/` directory through its pinning service, retain the resulting directory CID, and update the hosting record with its authorized publisher. Then run browser validation against the actual public gateway URL. No pinning credential, publishing tool or authority to update that hosting record was exposed in this run. This work did not modify the earlier hosted version.
 
-This is one total prize, paid manually. Daily claims do not transfer IMD or increase scores. No token, fee, wallet, contract or automatic payout has been added.
+## What is needed for a real competition
 
-## Finish and publish
+This export intentionally has no submission endpoint, backend, fake API or client-side launch switch. Enabling a date in JavaScript would not make prize records authoritative.
 
-1. Obtain and reuse the original game implementation and original assets; preserve its appearance, animations, sounds, arcade controls and responsive behavior.
-2. Connect a real persistent backend with stable player identity, server-side deterministic input replay, highest verified score ranking, earliest-achievement tie breaking, UTC daily claims and the ten-day cutoff. RESET must preserve records. Show actual loading/saving errors and refresh rankings after acceptance and periodically.
-3. Configure a new launch time on that backend, expose only its public API address to the frontend, and complete the outstanding game/backend tests in the validation report.
-4. Rebuild with `base: './'` and publish the **complete** `dist/` through the selected IPFS pinning service. Confirm persistent pinning, open the returned CID through a gateway subpath, and verify the game and shared records there. If ENS hosting is wanted, configure the selected name's IPFS content hash through its owner, then check the resulting eth.limo URL.
-5. Report only the actual returned IPFS/eth.limo URL and actual accessible source repository URL. No service-specific publishing command is available until a service is supplied.
+A concrete deployment option is a Cloudflare Worker API plus a D1 database. Required access: an account-scoped token with **Workers Scripts Edit and D1 Edit**, a D1 database ID/binding, and a public HTTPS API origin allowing the frontend origin. D1 access returned HTTP 401; Durable Objects access returned HTTP 403. Equivalent access to another transactional persistent backend would also work. Private deployment/database credentials must remain server-side.
 
-The current export must not be announced as a live competition. No `.git/` operations or commits were performed because the assignment prohibits touching that path. The deliverable files are present for the submission system to collect; actual Git bundle generation remains outside this worker's permitted actions.
+Backend implementation and frontend integration remain required. The service must persist an anonymous identity with an unguessable proof of ownership, nickname, server-issued seeded round, bounded input trace and verified result. Reuse the deterministic `src/engine.ts` simulation server-side, but do not accept client score numbers. Bind each nonce to its player, limit replay length/rate, reject reused/expired rounds, verify elapsed time and collision, and record verified achievements transactionally. An identity stored only in browser storage is neither cross-device recovery nor proof of one unique human; abuse controls need separate design.
+
+Only after shared score recording is tested should the backend expose a public UTC `launchAt`. Derive `endAt = launchAt + 864000000` milliseconds. Accept verified competition submissions only while `launchAt <= serverNow < endAt`; freeze highest scores and tie-break equal scores by earliest verified achievement. Keep practice available after the cutoff. Refresh shared ranks after successful submissions and periodically. No competition dates are configured by this delivery.
+
+Claims require an atomic unique `(playerId, UTC-date)` record. A first claim is Day 1; yesterday's claim continues the streak; any missed day resets the next claim to Day 1. A claim grants no IMD and no game-score bonus. Before launch, test multiple browsers, concurrent/duplicate claims, replay rejection, ties, round submissions around the exact cutoff and frozen ranks afterward. These backend tests could not run here.
+
+The competition lasts 10 days. The player ranked #1 at the end will receive 5 IMD. The reward will be sent manually by the organizer after the competition ends.
+
+This is one total prize, and the competition is **not operational** in the current export.

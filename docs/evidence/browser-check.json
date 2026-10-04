@@ -1,0 +1,202 @@
+{
+  "scope": "Production practice game; no shared backend",
+  "url": "http://127.0.0.1:44257/preview/",
+  "viewports": [
+    {
+      "width": 320,
+      "height": 1000,
+      "axeViolations": 0,
+      "layout": "fits; claim responsive",
+      "controls": "emulated touch + keyboard",
+      "contrast": [
+        {
+          "selector": ".primary",
+          "color": "rgb(20, 34, 12)",
+          "background": "rgb(180, 244, 109)",
+          "ratio": 12.74
+        },
+        {
+          "selector": ".mode-badge",
+          "color": "rgb(230, 197, 130)",
+          "background": "rgb(39, 38, 31)",
+          "ratio": 9.16
+        },
+        {
+          "selector": ".claim-panel",
+          "color": "rgb(234, 240, 231)",
+          "background": "rgb(16, 23, 37)",
+          "ratio": 15.47
+        },
+        {
+          "selector": ".arcade-controls button",
+          "color": "rgb(201, 212, 223)",
+          "background": "rgb(27, 39, 56)",
+          "ratio": 10.02
+        },
+        {
+          "selector": ".competition-status",
+          "color": "rgb(155, 169, 187)",
+          "background": "rgb(20, 30, 45)",
+          "ratio": 7.01
+        },
+        {
+          "selector": "thead",
+          "color": "rgb(155, 169, 187)",
+          "background": "rgb(20, 30, 45)",
+          "ratio": 7.01
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "height": 1000,
+      "axeViolations": 0,
+      "layout": "fits; claim responsive",
+      "controls": "emulated touch + keyboard",
+      "contrast": [
+        {
+          "selector": ".primary",
+          "color": "rgb(20, 34, 12)",
+          "background": "rgb(180, 244, 109)",
+          "ratio": 12.74
+        },
+        {
+          "selector": ".mode-badge",
+          "color": "rgb(230, 197, 130)",
+          "background": "rgb(39, 38, 31)",
+          "ratio": 9.16
+        },
+        {
+          "selector": ".claim-panel",
+          "color": "rgb(234, 240, 231)",
+          "background": "rgb(16, 23, 37)",
+          "ratio": 15.47
+        },
+        {
+          "selector": ".arcade-controls button",
+          "color": "rgb(201, 212, 223)",
+          "background": "rgb(27, 39, 56)",
+          "ratio": 10.02
+        },
+        {
+          "selector": ".competition-status",
+          "color": "rgb(155, 169, 187)",
+          "background": "rgb(20, 30, 45)",
+          "ratio": 7.01
+        },
+        {
+          "selector": "thead",
+          "color": "rgb(155, 169, 187)",
+          "background": "rgb(20, 30, 45)",
+          "ratio": 7.01
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "height": 1000,
+      "axeViolations": 0,
+      "layout": "fits; claim responsive",
+      "controls": "pointer + keyboard",
+      "contrast": [
+        {
+          "selector": ".primary",
+          "color": "rgb(20, 34, 12)",
+          "background": "rgb(180, 244, 109)",
+          "ratio": 12.74
+        },
+        {
+          "selector": ".mode-badge",
+          "color": "rgb(230, 197, 130)",
+          "background": "rgb(39, 38, 31)",
+          "ratio": 9.16
+        },
+        {
+          "selector": ".claim-panel",
+          "color": "rgb(234, 240, 231)",
+          "background": "rgb(16, 23, 37)",
+          "ratio": 15.47
+        },
+        {
+          "selector": ".arcade-controls button",
+          "color": "rgb(201, 212, 223)",
+          "background": "rgb(27, 39, 56)",
+          "ratio": 10.02
+        },
+        {
+          "selector": ".competition-status",
+          "color": "rgb(155, 169, 187)",
+          "background": "rgb(20, 30, 45)",
+          "ratio": 7.01
+        },
+        {
+          "selector": "thead",
+          "color": "rgb(155, 169, 187)",
+          "background": "rgb(20, 30, 45)",
+          "ratio": 7.01
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "height": 1000,
+      "axeViolations": 0,
+      "layout": "fits; claim responsive",
+      "controls": "pointer + keyboard",
+      "contrast": [
+        {
+          "selector": ".primary",
+          "color": "rgb(20, 34, 12)",
+          "background": "rgb(180, 244, 109)",
+          "ratio": 12.74
+        },
+        {
+          "selector": ".mode-badge",
+          "color": "rgb(230, 197, 130)",
+          "background": "rgb(39, 38, 31)",
+          "ratio": 9.16
+        },
+        {
+          "selector": ".claim-panel",
+          "color": "rgb(234, 240, 231)",
+          "background": "rgb(16, 23, 37)",
+          "ratio": 15.47
+        },
+        {
+          "selector": ".arcade-controls button",
+          "color": "rgb(201, 212, 223)",
+          "background": "rgb(27, 39, 56)",
+          "ratio": 10.02
+        },
+        {
+          "selector": ".competition-status",
+          "color": "rgb(155, 169, 187)",
+          "background": "rgb(20, 30, 45)",
+          "ratio": 7.01
+        },
+        {
+          "selector": "thead",
+          "color": "rgb(155, 169, 187)",
+          "background": "rgb(20, 30, 45)",
+          "ratio": 7.01
+        }
+      ]
+    }
+  ],
+  "interactions": [
+    "Audio starts on enable and hops; muted sound does not start",
+    "Share copies game link and practice best",
+    "Canvas played from pixels: 23 points, level 3; best survives reload",
+    "Storage failure still allows practice and displays warning",
+    "Share falls back to selectable text if clipboard and native share are unavailable"
+  ],
+  "errors": [],
+  "screenshots": [
+    "artifacts/game-320.png",
+    "artifacts/game-390.png",
+    "artifacts/game-768.png",
+    "artifacts/game-1280.png",
+    "artifacts/game-level-3.png"
+  ],
+  "result": "pass"
+}

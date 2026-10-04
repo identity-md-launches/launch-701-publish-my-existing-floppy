@@ -1,70 +1,55 @@
-# FLOPPY PEPE publication-status design
+# FLOPPY PEPE — implemented design
 
-## Overview
+The final React source is an original, compact arcade with a dark navy cabinet, lime controls, pixel Pepe in a blue shirt, computer RAM obstacles and a small gold chest. The playable canvas is the main action. This export explicitly runs in practice mode; its leaderboard and disabled claim panel do not imply a live prize competition.
 
-This document describes the implemented **status page only**. The original game is inaccessible, so its colors, dimensions, artwork, fonts, animations, sounds and responsive layout cannot be documented or reproduced yet. The neutral page communicates the missing source and deployment connections without simulating gameplay or an active competition.
+## Source and reuse points
 
-Source of truth: `src/styles.css` for tokens/layout and `src/main.tsx` for structure and copy. The page uses one reading column, clear text status, two sections and a native disclosure. These choices are not a replacement visual identity for FLOPPY PEPE.
+- `src/main.tsx`: page, cabinet, scoreboard, arcade navigation, claim panel, leaderboard and native dialogs. `Icon` supplies the shared 24-unit SVG icon system with 1.7-unit rounded strokes.
+- `src/styles.css`: semantic colors, system font stacks, component states and responsive layout.
+- `src/engine.ts`: fixed 60-step-per-second simulation, collision and scoring rules.
+- `src/art.ts`: original canvas drawing functions `pepe`, `ram` and `draw`. World size 600 × 430; floor begins at y=402. The canvas scales proportionally and uses pixelated rendering.
+- `public/pepe.svg`, `public/chest.svg`: original pixel vector artwork. The first also serves as the favicon. No image CDN, web font or external runtime asset is needed.
+- `src/sound.ts`: brief square-wave Web Audio sounds, off until enabled. `src/storage.ts`: device-only practice profile and safe persistence fallback.
 
-## Colors
+## Tokens and color roles
 
-All tokens are in `src/styles.css:8`.
+The source uses a hex palette with primitive and semantic CSS custom properties. Detailed circuit-board artwork has its own fixed drawing colors.
 
-| Token | Value | Role |
+| Semantic token | Primitive / value | Implemented role |
 | --- | --- | --- |
-| `--page` | `#f7f7f7` | Page background |
-| `--surface` | `#ffffff` | Disclosure background |
-| `--text` | `#202020` | Main copy and headings |
-| `--text-secondary` | `#555555` | Supporting copy and unset values |
-| `--border` | `#767676` | Disclosure boundary |
-| `--link` | `#184e91` | Reference link |
-| `--link-hover` | `#103563` | Link hover/active |
-| `--focus` | `#184e91` | Keyboard outline |
+| `--bg` | `--navy-950`, `#0b101c` | Page background |
+| `--surface` | `--navy-900`, `#101725` | Claim, leaderboard, dialogs |
+| `--raised` | `--navy-850`, `#151e2e` | Cabinet, stat tiles |
+| `--hover` | `--navy-800`, `#1b2738` | Neutral controls |
+| `--border` | `--slate-600`, `#334258` | Structural outlines |
+| `--muted` | `--slate-400`, `#9ba9bb` | Supporting text |
+| `--text` | `--slate-100`, `#eaf0e7` | Main text |
+| `--accent` | `--lime-400`, `#b4f46d` | Play, score, progress, brand |
+| `--accent-hover`, `--focus` | `--lime-300`, `#c8ff92` | Primary hover and focus ring |
+| `--on-accent` | `#14220c` | Play label |
+| `--warning` | `--gold-300`, `#e6c582` | Practice badge and prize information |
 
-This page implements a single light scheme. Measured computed-style pairs: body/page 15.21:1; secondary/page 6.96:1; link/page 7.73:1; body/surface 16.29:1; focus/page 7.73:1; focus/surface 8.28:1. Full measured states are recorded in `artifacts/browser-check.json`; hover/active contrasts were not separately measured. No original-game contrast claim is made.
+There is one dark theme. Practice status includes words and a dot; sound includes an icon, ON/OFF text and a pressed state. The measured primary label/background contrast is 12.74:1; arcade control text is 10.02:1; supporting text on the leaderboard footer is 7.01:1. These are browser-computed solid pairs, not a claim about every pixel in the game. See the validation report for complete measured pairs and limits.
 
-## Typography
+## Typography and spacing
 
-System font stack: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`. No downloaded font assets. Browser and platform choose the actual system face.
+`--sans` is `'Trebuchet MS', Arial, sans-serif`; `--mono` is `'Courier New', monospace`. Installed system fonts resolve the stacks. No font files or network requests are used. Body text is 15px/1.55; dialog text is 14px. The desktop brand heading uses `clamp(36px, 5.4vw, 60px)` with 1.1 line-height and -4px letter-spacing. Major card headings are 20–22px, the leaderboard heading is 16px mono, the scoreboard is 29px mono with tabular numbers. At the narrowest breakpoint the brand is 34px minimum and scoreboard numbers are 25px. Arcade micro-labels range from 6–11px; they are supplementary to the primary buttons, numeric score and Info instructions.
 
-- `--text-body`: `1rem`, normal weight 400, line-height 1.6.
-- `--text-small`: `0.875rem`, supporting copy/footer.
-- `--text-section`: `1.25rem`, bold native h2 weight, line-height 1.4.
-- `--text-title`: `clamp(1.75rem, 5vw, 2.5rem)`, bold native h1 weight, line-height 1.2, letter spacing `-0.025em`.
-- Links, summary, definition labels and reward copy use weight 600; status uses 700.
+The page is at most 1080px wide. Desktop gutters are 32px; section gaps are 24px. The cabinet uses 12px padding and a 13px outer radius, 5px internal control radii and a dark lower shadow resembling a cabinet base. Side panels use 20px padding and 12px radii. The main action is a 45px-minimum lime button with a shallow 3px lower edge; arcade buttons are at least 50px tall on desktop, 48px on small screens.
 
-Headings balance wrapping; prose has a maximum measure of 65ch. Text remains selectable. Long content can wrap anywhere instead of clipping. Screenshots confirm wrapping at 320 and 1280 pixels; automated reflow also covers 390 and 768.
+## Components and behavior
 
-## Layout
+- **Cabinet:** SCORE / BEST / LEVEL sit above the canvas. Ready, playing, paused and round-over states have distinct labels. Play and Play again start a fresh round; RESET preserves saved records. The level meter expresses progress to the next ten-point boundary.
+- **Claim:** chest artwork, Day 1 preview and a native disabled button with a visible reason. No fake claim, countdown or token award.
+- **Leaderboard:** semantic Rank / Name / Score / Level table, truthful empty state, exact prize terms and Not started status. No sample people or fabricated rankings.
+- **Arcade controls:** real buttons for SHARE, RESET, INFO, STATS and sound; a real link to `https://imd.fun` for IMD. SHARE uses native sharing, clipboard, then selectable text as a fallback.
+- **Dialogs:** native modal focus containment, visible close control, Escape dismissal and focus return. Name editing has a persistent label, a 20-character maximum, inline error and focus on the invalid field. Stats identify their device-only scope.
+- **Focus and motion:** 3px focus outline with 4px offset; the canvas ring is inset. Reduced-motion disables scrolling animation and button transitions. Under no motion preference, controls use a 120ms color/press transition and 0.96 pressed scale. The ready scene is static. Playing motion is essential; pause is available.
 
-Spacing tokens: `--space-sm: 0.5rem`, `--space-md: 1rem`, `--space-lg: 1.5rem`, `--space-xl: 3rem`. Main content has `max-inline-size: 48rem`, centered margins and fluid block padding `clamp(1.5rem, 5vw, 4rem)`.
+## Responsive behavior
 
-Sections have 3rem separation. Main inline padding is 1.5rem, reduced to 1rem at `max-width: 30rem`; both safe-area insets participate in its minimum. The definition list has two equal columns above that breakpoint and stacked labels/values below it. No fixed-height text containers, absolute positioning, sticky content or routes are used.
+Above 950px, the cabinet shares a two-column grid with a 288px sidebar. At 950px and below, that sidebar is 250px with 18px gaps. At 760px and below, the claim panel moves above the cabinet in document order, becomes compact, and its decorative streak preview disappears. The field-guide sidebar is hidden; full rules remain in INFO. At 420px and below, the claim button takes a full row, cabinet padding drops to 8px and the scoreboard/arcade controls tighten. The leaderboard header and competition footer wrap. Forms retain 16px input text.
 
-At 320, 390, 768 and 1280px, collapsed and expanded states fit without horizontal overflow, also with the root text size enlarged to 200%. Text enlargement is not native browser zoom. RTL and physical safe-area behavior were not tested.
+Chromium renders at 320, 390, 768 and 1280 CSS pixels were inspected; no horizontal overflow was found. The guide review, screenshots, fixes and unperformed checks are in `docs/validation.md`.
 
-## Elevation & Depth
-
-Flat page. The disclosure uses a white surface and a 1px structural border, without shadows or overlays.
-
-## Shapes
-
-Disclosure radius: 0.5rem. Focus outline: 3px solid `--focus`, offset 4px, radius 2px. Focus uses the system `Highlight` color in forced-colors mode. Expanded content starts with 0.5rem top padding so its text clears the focus outline.
-
-## Components
-
-`App` in `src/main.tsx:5` is a single page component with no public props or variants:
-
-- Header: publication label, h1 and explicit blocked status.
-- Source section: access explanation, request for original files, and `.reference-link`, a native anchor with a minimum 2.75rem height and descriptive text. It navigates in the same tab and retains native link behavior.
-- Competition section: unset dates/publication state in a definition list; native `details`/`summary` for required setup. Enter, Space, click and touch toggle it. No custom focus management is needed.
-- Footer: persistent statement that the original game has not been recreated or published.
-- `index.html` includes a text-only `noscript` blocker notice.
-
-There are no forms, score submissions, claims, loading states, sounds, animations or live success states. There is no browser-storage replacement for shared records. Reduced-motion mode is inherently static. Hover underlining is gated by `hover: hover`; `:focus-visible` provides keyboard outlines. The original arcade controls must be restored from the original source when available.
-
-## Do's and Don'ts
-
-Keep blocker copy accurate, native disclosure semantics and clear reference-link labeling. Additional status content should reuse section headings, spacing tokens and the existing reading column. Preserve source-backed measurements in this document after changes.
-
-Do not treat these neutral tokens as the game's design. Do not draw replacement Pepe/RAM/chest assets, invent scores or launch dates, or report publication success without an actual deployment. The original small green Pepe in a blue shirt, arcade proportions, artwork, sound and controls remain requirements to recover from the original source.
+Design guidance: Jakub Krehel's Better Interface, pinned commit `267330e1adfc66a718fb65fa6918c1f06d0a689e` (MIT). Documentation method: Paul Bakaus's Impeccable, pinned commit `9d715cc4f5564a990ca8345abfdd5df6dc9b41c8` (Apache-2.0). The adapted guide's license texts are retained in `docs/DESIGN_GUIDE_LICENSES.txt`.

@@ -1,0 +1,8 @@
+{
+  "service": "Cloudflare Workers Static Assets",
+  "name": "floppy-pepe",
+  "time": "2026-10-04T20:02:38.795Z",
+  "result": "not published",
+  "stage": "inline worker deployment",
+  "error": "403: undefined No access to the specified resource."
+}

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 
-// Checks the delivered export, not the unavailable game or backend.
+// Checks the complete production export with relative bundled asset URLs.
 const root = resolve('dist');
 const html = await readFile(join(root, 'index.html'), 'utf8');
 const urls = [...html.matchAll(/(?:src|href)="([^"]+)"/g)].map((match) => match[1]);

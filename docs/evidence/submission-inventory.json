@@ -1,0 +1,177 @@
+{
+  "result": "pass",
+  "budgetBytes": 8388608,
+  "filesBytesExcludingThisReport": 1043676,
+  "protectedFilesUnchanged": [
+    "package.json",
+    "package-lock.json",
+    "vite.config.ts",
+    "tsconfig.json"
+  ],
+  "exportMatchesFinalBuild": true,
+  "dependenciesCachesArchivesSymlinks": "none",
+  "files": [
+    {
+      "path": "DESIGN.md",
+      "bytes": 6207
+    },
+    {
+      "path": "README.md",
+      "bytes": 8699
+    },
+    {
+      "path": "dist/THIRD_PARTY_NOTICES.txt",
+      "bytes": 3294
+    },
+    {
+      "path": "dist/assets/index-C_qE0oWZ.css",
+      "bytes": 17787
+    },
+    {
+      "path": "dist/assets/index-DBI2rFL_.js",
+      "bytes": 243522
+    },
+    {
+      "path": "dist/chest.svg",
+      "bytes": 882
+    },
+    {
+      "path": "dist/index.html",
+      "bytes": 864
+    },
+    {
+      "path": "dist/pepe.svg",
+      "bytes": 442
+    },
+    {
+      "path": "docs/DESIGN_GUIDE_LICENSES.txt",
+      "bytes": 11964
+    },
+    {
+      "path": "docs/evidence/browser-check.json",
+      "bytes": 5528
+    },
+    {
+      "path": "docs/evidence/export-check.json",
+      "bytes": 161
+    },
+    {
+      "path": "docs/evidence/game-1280.png",
+      "bytes": 151480
+    },
+    {
+      "path": "docs/evidence/game-320.png",
+      "bytes": 84376
+    },
+    {
+      "path": "docs/evidence/game-390.png",
+      "bytes": 85356
+    },
+    {
+      "path": "docs/evidence/game-768.png",
+      "bytes": 140997
+    },
+    {
+      "path": "docs/evidence/game-check.json",
+      "bytes": 368
+    },
+    {
+      "path": "docs/evidence/game-level-3.png",
+      "bytes": 152179
+    },
+    {
+      "path": "docs/evidence/publication-static-assets.json",
+      "bytes": 239
+    },
+    {
+      "path": "docs/evidence/publication.json",
+      "bytes": 249
+    },
+    {
+      "path": "docs/evidence/publish-manifest.json",
+      "bytes": 666
+    },
+    {
+      "path": "docs/validation.md",
+      "bytes": 11193
+    },
+    {
+      "path": "index.html",
+      "bytes": 765
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 41434
+    },
+    {
+      "path": "package.json",
+      "bytes": 702
+    },
+    {
+      "path": "public/THIRD_PARTY_NOTICES.txt",
+      "bytes": 3294
+    },
+    {
+      "path": "public/chest.svg",
+      "bytes": 882
+    },
+    {
+      "path": "public/pepe.svg",
+      "bytes": 442
+    },
+    {
+      "path": "scripts/check-browser.mjs",
+      "bytes": 11887
+    },
+    {
+      "path": "scripts/check-export.mjs",
+      "bytes": 1442
+    },
+    {
+      "path": "scripts/check-game.mjs",
+      "bytes": 1859
+    },
+    {
+      "path": "scripts/publish.mjs",
+      "bytes": 5453
+    },
+    {
+      "path": "src/art.ts",
+      "bytes": 4058
+    },
+    {
+      "path": "src/engine.ts",
+      "bytes": 2663
+    },
+    {
+      "path": "src/main.tsx",
+      "bytes": 19262
+    },
+    {
+      "path": "src/sound.ts",
+      "bytes": 834
+    },
+    {
+      "path": "src/storage.ts",
+      "bytes": 1099
+    },
+    {
+      "path": "src/styles.css",
+      "bytes": 20629
+    },
+    {
+      "path": "src/vite-env.d.ts",
+      "bytes": 38
+    },
+    {
+      "path": "tsconfig.json",
+      "bytes": 363
+    },
+    {
+      "path": "vite.config.ts",
+      "bytes": 117
+    }
+  ],
+  "baselineHistoryBundleBytes": 92663,
+  "budgetNote": "Uncompressed submitted files plus the existing history bundle are below 1.2 MiB, leaving over 6 MiB for Git metadata/compression overhead. The read-only history bundle was written only to /tmp and is not submitted. The real index was not modified."
+}

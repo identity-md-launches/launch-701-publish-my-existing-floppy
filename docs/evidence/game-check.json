@@ -1,0 +1,14 @@
+{
+  "result": "pass",
+  "checks": [
+    "Hop raises Pepe",
+    "Gravity and ground collision",
+    "Ceiling collision",
+    "Normal RAM scores exactly +1, once",
+    "Gold RAM scores exactly +3, once",
+    "RAM collision awards no points",
+    "10-point levels, speed and gap progression",
+    "Level 3 gap moves",
+    "Same seed/input trace reproduces exactly"
+  ]
+}
